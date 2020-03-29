@@ -39,7 +39,7 @@ export default function walkView({navigation}) {
       );
       playSound();
     }
-    return (<Distance stylee={styles.distance} alerted={!isInRange}/>);
+    return (<Distance alerted={!isInRange}/>);
   }
 
   return (

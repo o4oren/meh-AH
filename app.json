@@ -23,12 +23,10 @@
       "assets/**/*"
     ],
     "ios": {
-      "bundleIdentifier": "geva.oren.mehAh",
       "buildNumber": "1.0.0",
       "supportsTablet": false
     },
     "android": {
-      "package": "geva.oren.mehAh",
       "versionCode": 1,
       "permissions": [
         "ACCESS_FINE_LOCATION",
