@@ -65,6 +65,7 @@ export default function mapView() {
           style={styles.mapStyle}
           followsUserLocation
           loadingEnabled
+          showsPointsOfInterest={false}
           region={{
             latitude: currentLocation.latitude,
             longitude: currentLocation.longitude,
