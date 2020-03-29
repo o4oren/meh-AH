@@ -4,7 +4,7 @@ import Provider from 'react-redux/lib/components/Provider';
 import {createStore} from "redux";
 import combineReducers from "./redux/reducers/rootReducer";
 import { AppLoading } from 'expo';
-import {retrieveHomeLocation} from "./services/storageService";
+import {retrieveSavedState} from "./services/storageService";
 
 const store = createStore(combineReducers);
 
@@ -12,14 +12,14 @@ export default function App() {
   const [state, setState] = useState({isReady: false});
 
   useEffect(() => {
-    async function loadHomeLocationFromStorage() {
-      const homeLocation = await retrieveHomeLocation();
+    async function loadStateFromStorage() {
+      const savedState = await retrieveSavedState();
       setState({
         isReady: true,
-        homeLocation: homeLocation
+        savedState: savedState
       });
     }
-    loadHomeLocationFromStorage();
+    loadStateFromStorage();
   }, []);
 
   if(!state.isReady) {
@@ -29,7 +29,7 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-        <MainApp homeLocation={state.homeLocation}/>
+        <MainApp savedState={state.savedState}/>
     </Provider>
   );
 }

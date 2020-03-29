@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {View} from "react-native";
 import React from "react";
 import allActions from '../../redux/actions';
+import {storeAllowedRange} from '../../services/storageService';
 
 export default function rangeSlider() {
   const range = useSelector(state => state.settings.allowedRange);
@@ -11,7 +12,10 @@ export default function rangeSlider() {
     <View>
       <Slider
         value={range}
-        onValueChange={value => dispatch(allActions.settingsActions.setAllowedRange(value))}
+        onValueChange={value => {
+          dispatch(allActions.settingsActions.setAllowedRange(value));
+          storeAllowedRange(value);
+        }}
         minimumValue={0}
         maximumValue={1000}
         step={10}

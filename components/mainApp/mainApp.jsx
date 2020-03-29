@@ -17,8 +17,13 @@ export default function MainApp(props) {
 
   // app is loading from storage. If it passed a loaded home location, use it.
   useEffect(()=>{
-    if (props.homeLocation) {
-      dispatch(allActions.settingsActions.setHomeLocation(props.homeLocation));
+    if (props.savedState) {
+      if(props.savedState.homeLocation) {
+        dispatch(allActions.settingsActions.setHomeLocation(props.savedState.homeLocation));
+      }
+      if(props.savedState.allowedRange) {
+        dispatch(allActions.settingsActions.setAllowedRange(props.savedState.allowedRange));
+      }
     }
   },[]);
 
