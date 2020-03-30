@@ -54,7 +54,7 @@ export default function MainApp(props) {
       <NavigationContainer style={styles.container}>
         <Drawer.Navigator
           initialRouteName={initialRouteName}
-
+          contentContainer
         >
           <Drawer.Screen name="Home" component={WalkView} />
           <Drawer.Screen name="Settings" component={Settings} />
