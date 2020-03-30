@@ -21,7 +21,9 @@ export default function mapView() {
       flex: 1,
       width: Dimensions.get('window').width,
       flexGrow: 0.9,
-      marginTop: 20
+      marginTop: 20,
+      minHeight: 100,
+      minWidth: 100
     }
   });
 
