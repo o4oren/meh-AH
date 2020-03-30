@@ -6,13 +6,12 @@ import WalkView from '../walkView/walkView';
 import Settings from '../settings/settings';
 import About from '../about/about';
 import * as Location from 'expo-location';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import allActions from '../../redux/actions';
 import * as Permissions from 'expo-permissions';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 export default function MainApp(props) {
-  const homeLocation = useSelector(state => state.settings.homeLocation);
   const dispatch = useDispatch();
 
   // app is loading from storage. If it passed a loaded home location, use it.
