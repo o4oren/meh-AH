@@ -52,7 +52,10 @@ export default function MainApp(props) {
 
   return (
       <NavigationContainer style={styles.container}>
-        <Drawer.Navigator initialRouteName={initialRouteName}>
+        <Drawer.Navigator
+          initialRouteName={initialRouteName}
+
+        >
           <Drawer.Screen name="Home" component={WalkView} />
           <Drawer.Screen name="Settings" component={Settings} />
           <Drawer.Screen name="About" component={About} />
