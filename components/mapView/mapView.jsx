@@ -61,16 +61,19 @@ export default function mapView(props) {
     watchPosition();
   }, []);
 
-
   const animateMap = () => {
     if (currentPosition && mapRef.current) {
-      const region = {
-        latitude: currentPosition.latitude,
-        longitude: currentPosition.longitude,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+      const camera = {
+        center: {
+          latitude: currentPosition.latitude,
+          longitude: currentPosition.longitude,
+        },
+        pitch: 30,
+        heading: currentPosition.heading,
+        altitude: 300,
+        zoom: 18.5
       };
-      mapRef.current.animateToRegion(region, 1000);
+      mapRef.current.animateCamera(camera, 5000);
     }
   };
 
@@ -113,12 +116,16 @@ export default function mapView(props) {
           ref={mapRef}
           style={styles.mapStyle}
           loadingEnabled={true}
-          showsPointsOfInterest={false}
-          initialRegion={{
-            latitude: initialPosition.latitude,
-            longitude: initialPosition.longitude,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+          showsPointsOfInterest={true}
+          initialCamera={{
+            center: {
+              latitude: currentPosition.latitude,
+              longitude: currentPosition.longitude,
+            },
+            pitch: 30,
+            heading: currentPosition.heading,
+            altitude: 300,
+            zoom: 18.5
           }}
           onRegionChangeComplete={animateMap()}
         >
