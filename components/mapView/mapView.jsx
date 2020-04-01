@@ -1,5 +1,5 @@
 import MapView, {Circle, Marker} from "react-native-maps";
-import React, {createRef, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Dimensions } from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";

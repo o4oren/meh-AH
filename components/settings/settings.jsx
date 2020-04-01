@@ -5,7 +5,7 @@ import RangeSlider from './rangeSlider';
 import {useDispatch, useSelector} from "react-redux";
 import allActions from '../../redux/actions';
 import MapView from '../mapView/mapView';
-import {storeHomeLocation} from '../../services/storageService';
+import {storeHomePosition} from '../../services/storageService';
 import Header from "../header/header";
 
 export default function settings({ navigation }) {
@@ -14,7 +14,7 @@ export default function settings({ navigation }) {
 
   async function setHomeLocation() {
     dispatch(allActions.settingsActions.setHomePosition(currentPosition));
-    await storeHomeLocation(currentPosition);
+    await storeHomePosition(currentPosition);
     navigation.navigate('Home');
   }
 

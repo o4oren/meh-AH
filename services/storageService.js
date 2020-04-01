@@ -1,12 +1,12 @@
 import { AsyncStorage } from 'react-native';
 
-const HOME_LOCATION = 'HOME_LOCATION';
+const HOME_POSITION = 'HOME_POSITION';
 const ALLOWED_RANGE = 'ALLOWED_RANGE';
 
 
-export const storeHomeLocation = async (location) => {
+export const storeHomePosition = async (position) => {
   try {
-    await AsyncStorage.setItem(HOME_LOCATION, JSON.stringify(location));
+    await AsyncStorage.setItem(HOME_POSITION, JSON.stringify(position));
   } catch (err) {
     console.log('Error storing home location', err);
   }
@@ -22,10 +22,10 @@ export const storeAllowedRange = async (range) => {
 
 export const retrieveSavedState = async () => {
   try {
-    const promises = [AsyncStorage.getItem(HOME_LOCATION), AsyncStorage.getItem(ALLOWED_RANGE)];
-    const [homeLocation, allowedRange] = await Promise.all(promises);
+    const promises = [AsyncStorage.getItem(HOME_POSITION), AsyncStorage.getItem(ALLOWED_RANGE)];
+    const [homePosition, allowedRange] = await Promise.all(promises);
     return {
-      homeLocation: JSON.parse(homeLocation),
+      homePosition: JSON.parse(homePosition),
       allowedRange: JSON.parse(allowedRange)
     };
   } catch (err) {

@@ -24,7 +24,7 @@ export default function MainApp(props) {
     }
   },[]);
 
-  const initialRouteName = props.homePosition ? 'Home' : 'Settings';
+  const initialRouteName = props.savedState.homePosition ? 'Home' : 'Settings';
   const Drawer = createDrawerNavigator();
 
   return (
