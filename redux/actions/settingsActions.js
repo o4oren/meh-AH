@@ -1,10 +1,10 @@
-export const SET_HOME_LOCATION = "SET_HOME_ADDRESS";
+export const SET_HOME_POSITION = "SET_HOME_ADDRESS";
 export const SET_ALLOWED_RANGE = "SET_ALLOWED_RANGE";
 
-const setHomeLocation = (location) => {
+const setHomePosition = (position) => {
   return {
-    type: SET_HOME_LOCATION,
-    payload: { homeLocation: location }
+    type: SET_HOME_POSITION,
+    payload: { homeLocation: position }
   };
 };
 
@@ -16,6 +16,6 @@ const setAllowedRange = (range) => {
 };
 
 export default {
-  setHomeLocation: setHomeLocation,
+  setHomePosition: setHomePosition,
   setAllowedRange
 };

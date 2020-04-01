@@ -15,8 +15,8 @@ export default function MainApp(props) {
   // app is loading from storage. If it passed a loaded home location, use it.
   useEffect(()=>{
     if (props.savedState) {
-      if(props.savedState.homeLocation) {
-        dispatch(allActions.settingsActions.setHomeLocation(props.savedState.homeLocation));
+      if(props.savedState.homePosition) {
+        dispatch(allActions.settingsActions.setHomePosition(props.savedState.homePosition));
       }
       if(props.savedState.allowedRange) {
         dispatch(allActions.settingsActions.setAllowedRange(props.savedState.allowedRange));
@@ -24,7 +24,7 @@ export default function MainApp(props) {
     }
   },[]);
 
-  const initialRouteName = props.homeLocation ? 'Home' : 'Settings';
+  const initialRouteName = props.homePosition ? 'Home' : 'Settings';
   const Drawer = createDrawerNavigator();
 
   return (

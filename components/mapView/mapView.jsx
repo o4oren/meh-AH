@@ -1,5 +1,5 @@
 import MapView, {Circle, Marker} from "react-native-maps";
-import React, {useEffect} from "react";
+import React, {createRef, useEffect, useRef, useState} from "react";
 import { Dimensions } from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";
@@ -8,10 +8,16 @@ import allActions from "../../redux/actions";
 import * as Location from "expo-location";
 
 export default function mapView() {
-  const currentLocation = useSelector(state => state.location.currentLocation);
-  const homeLocation = useSelector(state => state.settings.homeLocation);
+  const LATITUDE_DELTA = 0.003;
+  const LONGITUDE_DELTA = 0.003;
+  const currentPosition = useSelector(state => state.location.currentPosition);
+  const [initialPosition, setInitialPosition] = useState(null)
+  const homePosition = useSelector(state => state.settings.homePosition);
   const radius = useSelector(state => state.settings.allowedRange);
   const dispatch = useDispatch();
+  const mapRef = useRef(null);
+  const userMarkerRef = useRef(null);
+
 
   const styles = StyleSheet.create({
     container: {
@@ -32,11 +38,11 @@ export default function mapView() {
   });
 
   useEffect(() => {
-    async function watchLocations() {
-      const locationOptions = {
+    async function watchPosition() {
+      const positionOptions = {
         accuracy: Location.Accuracy.Highest,
         timeInterval: 500,
-        distanceInterval: 0.5,
+        distanceInterval: 1,
         mayShowUserSettingsDialog: true
       };
 
@@ -44,24 +50,39 @@ export default function mapView() {
       if (status !== 'granted') {
         dispatch(allActions.errorActions.noLocationPermissionsError());
       } else {
-        await Location.watchPositionAsync(locationOptions, location => {
-          dispatch(allActions.locationActions.updateCurrentLocation(location.coords));
+        Location.getCurrentPositionAsync({}).then(position => {
+          setInitialPosition(position.coords);
+        });
+        await Location.watchPositionAsync(positionOptions, position => {
+          dispatch(allActions.locationActions.updateCurrentPosition(position.coords));
         });
       }
     }
 
-    watchLocations();
+    watchPosition();
   }, []);
 
 
+  const animateMap = () => {
+    if (currentPosition && mapRef.current) {
+      const region = {
+        latitude: currentPosition.latitude,
+        longitude: currentPosition.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      };
+      mapRef.current.animateToRegion(region, 1000);
+    }
+  };
+
   function renderMapView() {
     function addHomeMarker() {
-      if(homeLocation) {
+      if(homePosition) {
         return (
           <Marker
             coordinate={{
-              latitude: homeLocation.latitude,
-              longitude: homeLocation.longitude
+              latitude: homePosition.latitude,
+              longitude: homePosition.longitude
             }}
             title='Home'
             image={require('../../assets/house-hand-drawn-128.png')}
@@ -73,12 +94,12 @@ export default function mapView() {
     }
 
     function addRangeRadius() {
-      if(homeLocation) {
+      if(homePosition) {
         return (
           <Circle
             center={{
-              latitude: homeLocation.latitude,
-              longitude: homeLocation.longitude
+              latitude: homePosition.latitude,
+              longitude: homePosition.longitude
             }}
             radius={radius}
             strokeColor='#EC1616'
@@ -87,27 +108,29 @@ export default function mapView() {
         );
       }
     }
-
-    if(currentLocation) {
+    if(currentPosition && initialPosition) {
       return (
         <MapView
+          ref={mapRef}
           style={styles.mapStyle}
           loadingEnabled={true}
           showsPointsOfInterest={false}
-          region={{
-            latitude: currentLocation.latitude,
-            longitude: currentLocation.longitude,
-            latitudeDelta: 0.003,
-            longitudeDelta: 0.003,
+          initialRegion={{
+            latitude: initialPosition.latitude,
+            longitude: initialPosition.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
           }}
+          onRegionChangeComplete={animateMap()}
         >
           {addHomeMarker()}
           {addRangeRadius()}
           <Marker
             coordinate={{
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude
+              latitude: currentPosition.latitude,
+              longitude: currentPosition.longitude
             }}
+            ref={userMarkerRef}
             title='Me'
             image={require('../../assets/walking-the-dog-128.png')}
             anchor={{x: 0.5, y: 0.5}}

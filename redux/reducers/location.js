@@ -1,15 +1,15 @@
 import {
-  UPDATE_CURRENT_LOCATION,
+  UPDATE_CURRENT_POSITION,
   EXCEED_ALLOWED_RANGE,
   RETURN_TO_ALLOWED_RANGE,
   UPDATE_DISTANCE
 } from '../actions/locationActions';
 
-const location = (state = { currentLocation: null, isInRange: true, distance: 0},
+const location = (state = { prevPosition: null, currentPosition: null, isInRange: true, distance: 0},
                   action) => {
   switch (action.type) {
-    case UPDATE_CURRENT_LOCATION:
-      return {...state, currentLocation: action.payload.currentLocation};
+    case UPDATE_CURRENT_POSITION:
+      return {...state, currentPosition: action.payload.currentPosition};
     case EXCEED_ALLOWED_RANGE:
       return { ...state, isInRange: false };
     case RETURN_TO_ALLOWED_RANGE:

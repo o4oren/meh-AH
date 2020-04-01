@@ -9,12 +9,12 @@ import {storeHomeLocation} from '../../services/storageService';
 import Header from "../header/header";
 
 export default function settings({ navigation }) {
-  const currentLocation = useSelector(state => state.location.currentLocation);
+  const currentPosition = useSelector(state => state.location.currentPosition);
   const dispatch = useDispatch();
 
   async function setHomeLocation() {
-    dispatch(allActions.settingsActions.setHomeLocation(currentLocation));
-    await storeHomeLocation(currentLocation);
+    dispatch(allActions.settingsActions.setHomePosition(currentPosition));
+    await storeHomeLocation(currentPosition);
     navigation.navigate('Home');
   }
 
