@@ -16,7 +16,7 @@ export default  function header(props) {
     <Header
       leftComponent={renderLeftItem()}
       centerComponent={{ text: 'meh-AH!', style: { color: '#fff', fontSize: 20 } }}
-      backgroundColor={'#5388d0'}
+      backgroundColor={'#464f8c'}
     />
   );
 }

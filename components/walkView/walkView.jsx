@@ -46,7 +46,7 @@ export default function walkView({navigation}) {
     <View style={styles.container}>
       <Header navigation={navigation}/>
       {checkRange()}
-      <MapView style={styles.mapView}/>
+      <MapView style={styles.mapView} heightCompensation='140'/>
     </View>
   );
 }
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   mapView: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    height: 400
   },
   distance: {
     flex: 1

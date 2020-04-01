@@ -7,7 +7,7 @@ import * as Permissions from "expo-permissions";
 import allActions from "../../redux/actions";
 import * as Location from "expo-location";
 
-export default function mapView() {
+export default function mapView(props) {
   const LATITUDE_DELTA = 0.003;
   const LONGITUDE_DELTA = 0.003;
   const currentPosition = useSelector(state => state.location.currentPosition);
@@ -18,7 +18,6 @@ export default function mapView() {
   const mapRef = useRef(null);
   const userMarkerRef = useRef(null);
 
-
   const styles = StyleSheet.create({
     container: {
       marginTop: 20,
@@ -28,9 +27,9 @@ export default function mapView() {
       justifyContent: 'center',
     },
     mapStyle: {
-      flex: 1,
+      // flex: 1,
       width: Dimensions.get('window').width,
-      flexGrow: 0.9,
+      height: Dimensions.get('window').height - props.heightCompensation,
       marginTop: 20,
       minHeight: 100,
       minWidth: 100

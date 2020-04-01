@@ -31,7 +31,7 @@ export default function settings({ navigation }) {
         onPress={setHomeLocation}
         buttonStyle={{backgroundColor: '#5388d0'}}
       />
-      <MapView style={styles.mapView}/>
+      <MapView style={styles.mapView} heightCompensation='270'/>
     </View>
   );
 }
