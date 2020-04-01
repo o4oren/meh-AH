@@ -1,13 +1,17 @@
 import MapView, {Circle, Marker} from "react-native-maps";
-import React from "react";
+import React, {useEffect} from "react";
 import { Dimensions } from 'react-native';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";
+import * as Permissions from "expo-permissions";
+import allActions from "../../redux/actions";
+import * as Location from "expo-location";
 
 export default function mapView() {
   const currentLocation = useSelector(state => state.location.currentLocation);
   const homeLocation = useSelector(state => state.settings.homeLocation);
   const radius = useSelector(state => state.settings.allowedRange);
+  const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
     container: {
@@ -26,6 +30,29 @@ export default function mapView() {
       minWidth: 100
     }
   });
+
+  useEffect(() => {
+    async function watchLocations() {
+      const locationOptions = {
+        accuracy: Location.Accuracy.Highest,
+        timeInterval: 500,
+        distanceInterval: 0.5,
+        mayShowUserSettingsDialog: true
+      };
+
+      let {status} = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        dispatch(allActions.errorActions.noLocationPermissionsError());
+      } else {
+        await Location.watchPositionAsync(locationOptions, location => {
+          dispatch(allActions.locationActions.updateCurrentLocation(location.coords));
+        });
+      }
+    }
+
+    watchLocations();
+  }, []);
+
 
   function renderMapView() {
     function addHomeMarker() {
@@ -65,8 +92,7 @@ export default function mapView() {
       return (
         <MapView
           style={styles.mapStyle}
-          followsUserLocation
-          loadingEnabled
+          loadingEnabled={true}
           showsPointsOfInterest={false}
           region={{
             latitude: currentLocation.latitude,

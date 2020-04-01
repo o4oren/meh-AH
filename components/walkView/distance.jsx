@@ -20,7 +20,7 @@ export default function distance(props) {
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude
       }, { unit: 'meter' });
-      if (Math.abs(distance - dist) > 2) {
+      if (Math.abs(distance - dist) >= 1) {
         dispatch(allActions.locationActions.updateDistance((Math.round(dist))));
       }
     }
@@ -35,11 +35,8 @@ export default function distance(props) {
   }
 
   useEffect(() => {
-    let job = setInterval(() => {
-      calcDistance();
-      checkExceeding();
-    }, 200);
-    return (()=> clearTimeout(job));
+    calcDistance();
+    checkExceeding();
   });
 
   if(props.alerted) {
