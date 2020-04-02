@@ -1,4 +1,4 @@
-import MapView, {Circle, Marker} from "react-native-maps";
+import MapView, {Circle, Marker, AnimatedRegion} from "react-native-maps";
 import React, {useEffect, useRef, useState} from "react";
 import { Dimensions } from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
@@ -11,7 +11,8 @@ export default function mapView(props) {
   const LATITUDE_DELTA = 0.003;
   const LONGITUDE_DELTA = 0.003;
   const currentPosition = useSelector(state => state.location.currentPosition);
-  const [initialPosition, setInitialPosition] = useState(null)
+  const [initialPosition, setInitialPosition] = useState(null);
+  const [heading, setHeading] = useState(0)
   const homePosition = useSelector(state => state.settings.homePosition);
   const radius = useSelector(state => state.settings.allowedRange);
   const dispatch = useDispatch();
@@ -58,30 +59,45 @@ export default function mapView(props) {
       }
     }
 
+    async function watchHeading() {
+      await Location.watchHeadingAsync(heading => setHeading(heading.trueHeading));
+    }
+    watchHeading();
     watchPosition();
   }, []);
 
-  const animateMap = () => {
+  useEffect(() => {
     if (currentPosition && mapRef.current) {
       const camera = {
         center: {
           latitude: currentPosition.latitude,
           longitude: currentPosition.longitude,
         },
-        pitch: 30,
-        heading: currentPosition.heading,
-        altitude: 300,
-        zoom: 18.5
+        heading: heading
       };
-      mapRef.current.animateCamera(camera, 5000);
+      mapRef.current.animateCamera(camera, 1000);
     }
-  };
+  }, [heading]);
+
+  useEffect(() => {
+    if (currentPosition && mapRef.current) {
+      const camera = {
+        center: {
+          latitude: currentPosition.latitude,
+          longitude: currentPosition.longitude,
+        },
+      }
+      mapRef.current.animateCamera(camera, 1000);
+    }
+  }, [currentPosition]);
+
 
   function renderMapView() {
     function addHomeMarker() {
       if(homePosition) {
         return (
-          <Marker
+          <Marker.Animated
+            ref={userMarkerRef}
             coordinate={{
               latitude: homePosition.latitude,
               longitude: homePosition.longitude
@@ -127,15 +143,14 @@ export default function mapView(props) {
             altitude: 300,
             zoom: 18.5
           }}
-          onRegionChangeComplete={animateMap()}
         >
           {addHomeMarker()}
           {addRangeRadius()}
           <Marker
             coordinate={{
-              latitude: currentPosition.latitude,
-              longitude: currentPosition.longitude
-            }}
+                latitude: currentPosition.latitude,
+                longitude: currentPosition.longitude
+              }}
             ref={userMarkerRef}
             title='Me'
             image={require('../../assets/walking-the-dog-128.png')}
