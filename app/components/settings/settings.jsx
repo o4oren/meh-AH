@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import allActions from '../../redux/actions';
 import MapView from '../mapView/mapView';
 import {storeHomePosition} from '../../services/storageService';
-import Header from "../header/header";
 
 export default function settings({ navigation }) {
   const currentPosition = useSelector(state => state.location.currentPosition);
@@ -20,7 +19,6 @@ export default function settings({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation}/>
       <RangeSlider style={styles.slider}/>
       <View style = {styles.divider} />
       <Text style={styles.text}>קבע את מיקום הבית למיקום הנוכחי</Text>

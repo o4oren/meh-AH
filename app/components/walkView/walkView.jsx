@@ -4,9 +4,8 @@ import Distance from './distance';
 import {useSelector} from "react-redux";
 import MapView from '../mapView/mapView';
 import { Audio } from 'expo-av';
-import Header from "../header/header";
 
-export default function walkView({navigation}) {
+export default function walkView() {
   const isInRange = useSelector(state => state.location.isInRange);
   const soundObject = new Audio.Sound();
 
@@ -44,7 +43,6 @@ export default function walkView({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation}/>
       {checkRange()}
       <MapView style={styles.mapView} heightCompensation='140'/>
     </View>

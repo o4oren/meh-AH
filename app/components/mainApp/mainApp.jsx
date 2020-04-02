@@ -5,9 +5,11 @@ import {StyleSheet} from 'react-native';
 import WalkView from '../walkView/walkView';
 import Settings from '../settings/settings';
 import About from '../about/about';
+import Header from '../header/header';
 import {useDispatch} from "react-redux";
 import allActions from '../../redux/actions';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { navigationRef } from '../../services/rootNavigation';
 
 export default function MainApp(props) {
   const dispatch = useDispatch();
@@ -28,7 +30,8 @@ export default function MainApp(props) {
   const Drawer = createDrawerNavigator();
 
   return (
-      <NavigationContainer style={styles.container}>
+      <NavigationContainer style={styles.container} ref={navigationRef}>
+        <Header />
         <Drawer.Navigator
           initialRouteName={initialRouteName}
           contentContainer

@@ -1,13 +1,11 @@
 import {StyleSheet, View, Linking} from "react-native";
-import Header from "../header/header";
 import React from "react";
 import {Text} from "react-native-elements";
 
-export default function about({navigation}) {
+export default function about() {
   return (
     <View style={styles.container}>
       <View style={styles.mainBody}>
-        <Header navigation={navigation}/>
         <Text style={styles.heading}>אודות meh-AH!</Text>
         <Text style={styles.textHebrew}>עקב התפרצות וירוס הקורונה,
           הנחיות משרד הבריאות מגבילות יציאה מהבית שלא לצורך הצטיידות במזון או תרופות למרחק 100 מטרים מהבית.
