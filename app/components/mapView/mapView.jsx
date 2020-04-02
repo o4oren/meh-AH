@@ -11,8 +11,13 @@ export default function mapView(props) {
   const LATITUDE_DELTA = 0.003;
   const LONGITUDE_DELTA = 0.003;
   const currentPosition = useSelector(state => state.location.currentPosition);
-  const [initialPosition, setInitialPosition] = useState(null);
-  const [heading, setHeading] = useState(0)
+  const [heading, setHeading] = useState(0);
+  const [userMarkerCoordinate, setUserMarkerCoordinate] = useState(new AnimatedRegion({
+    latitude: 34,
+    longitude: 30,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA
+  }));
   const homePosition = useSelector(state => state.settings.homePosition);
   const radius = useSelector(state => state.settings.allowedRange);
   const dispatch = useDispatch();
@@ -50,9 +55,6 @@ export default function mapView(props) {
       if (status !== 'granted') {
         dispatch(allActions.errorActions.noLocationPermissionsError());
       } else {
-        Location.getCurrentPositionAsync({}).then(position => {
-          setInitialPosition(position.coords);
-        });
         await Location.watchPositionAsync(positionOptions, position => {
           dispatch(allActions.locationActions.updateCurrentPosition(position.coords));
         });
@@ -80,6 +82,7 @@ export default function mapView(props) {
   }, [heading]);
 
   const updateMapPosition = () => {
+    const duration = 1000;
     if (currentPosition && mapRef.current) {
       const camera = {
         center: {
@@ -87,7 +90,15 @@ export default function mapView(props) {
           longitude: currentPosition.longitude,
         },
       };
-      mapRef.current.animateCamera(camera, 1000);
+      mapRef.current.region = new AnimatedRegion({
+        latitude: 34,
+        longitude: 30,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
+      });
+      mapRef.current.animateCamera(camera, duration);
+      userMarkerCoordinate.timing({        latitude: currentPosition.latitude,
+        longitude: currentPosition.longitude}, duration).start();
     }
   };
 
@@ -95,12 +106,8 @@ export default function mapView(props) {
     function addHomeMarker() {
       if(homePosition) {
         return (
-          <Marker.Animated
-            ref={userMarkerRef}
-            coordinate={{
-              latitude: homePosition.latitude,
-              longitude: homePosition.longitude
-            }}
+          <Marker
+            coordinate={{latitude: homePosition.latitude, longitude: homePosition.longitude}}
             title='Home'
             image={require('../../../assets/house-hand-drawn-128.png')}
             anchor={{x: 0.5, y: 0.5}}
@@ -114,10 +121,7 @@ export default function mapView(props) {
       if(homePosition) {
         return (
           <Circle
-            center={{
-              latitude: homePosition.latitude,
-              longitude: homePosition.longitude
-            }}
+            center={{latitude: homePosition.latitude, longitude: homePosition.longitude}}
             radius={radius}
             strokeColor='#EC1616'
             strokeWidth={2}
@@ -125,7 +129,7 @@ export default function mapView(props) {
         );
       }
     }
-    if(currentPosition && initialPosition) {
+    if(currentPosition) {
       return (
         <MapView
           ref={mapRef}
@@ -146,11 +150,8 @@ export default function mapView(props) {
         >
           {addHomeMarker()}
           {addRangeRadius()}
-          <Marker
-            coordinate={{
-                latitude: currentPosition.latitude,
-                longitude: currentPosition.longitude
-              }}
+          <Marker.Animated
+            coordinate={userMarkerCoordinate}
             ref={userMarkerRef}
             title='Me'
             image={require('../../../assets/walking-the-dog-128.png')}
