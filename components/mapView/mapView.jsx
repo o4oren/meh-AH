@@ -41,7 +41,7 @@ export default function mapView(props) {
     async function watchPosition() {
       const positionOptions = {
         accuracy: Location.Accuracy.Highest,
-        timeInterval: 500,
+        timeInterval: 1000,
         distanceInterval: 1,
         mayShowUserSettingsDialog: true
       };
@@ -75,7 +75,7 @@ export default function mapView(props) {
         },
         heading: heading
       };
-      mapRef.current.animateCamera(camera, 1000);
+      mapRef.current.animateCamera(camera);
     }
   }, [heading]);
 
@@ -86,7 +86,7 @@ export default function mapView(props) {
           latitude: currentPosition.latitude,
           longitude: currentPosition.longitude,
         },
-      }
+      };
       mapRef.current.animateCamera(camera, 1000);
     }
   }, [currentPosition]);
