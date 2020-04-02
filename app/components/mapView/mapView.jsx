@@ -79,7 +79,7 @@ export default function mapView(props) {
     }
   }, [heading]);
 
-  useEffect(() => {
+  const updateMapPosition = () => {
     if (currentPosition && mapRef.current) {
       const camera = {
         center: {
@@ -89,8 +89,7 @@ export default function mapView(props) {
       };
       mapRef.current.animateCamera(camera, 1000);
     }
-  }, [currentPosition]);
-
+  };
 
   function renderMapView() {
     function addHomeMarker() {
@@ -143,6 +142,7 @@ export default function mapView(props) {
             altitude: 300,
             zoom: 18.5
           }}
+          onRegionChangeComplete={updateMapPosition()}
         >
           {addHomeMarker()}
           {addRangeRadius()}
