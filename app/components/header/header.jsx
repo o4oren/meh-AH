@@ -10,7 +10,7 @@ export default  function header() {
         name='menu'
         type='material'
         color='#fff'
-        onPress={() => RootNavigation.openDrawer()}
+        onPress={() => RootNavigation.toggleDrawer()}
       />
     );
   }

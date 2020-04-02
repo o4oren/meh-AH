@@ -8,6 +8,6 @@ export function navigate(name, params) {
   navigationRef.current?.navigate(name, params);
 }
 
-export function openDrawer() {
-  navigationRef.current?.dispatch(DrawerActions.openDrawer());
+export function toggleDrawer() {
+  navigationRef.current?.dispatch(DrawerActions.toggleDrawer());
 }
