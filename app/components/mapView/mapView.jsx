@@ -103,7 +103,7 @@ export default function mapView(props) {
               longitude: homePosition.longitude
             }}
             title='Home'
-            image={require('../../assets/house-hand-drawn-128.png')}
+            image={require('../../../assets/house-hand-drawn-128.png')}
             anchor={{x: 0.5, y: 0.5}}
             centerOffset={{x: 0.5, y: 0.5}}
           />
@@ -153,7 +153,7 @@ export default function mapView(props) {
               }}
             ref={userMarkerRef}
             title='Me'
-            image={require('../../assets/walking-the-dog-128.png')}
+            image={require('../../../assets/walking-the-dog-128.png')}
             anchor={{x: 0.5, y: 0.5}}
             centerOffset={{x: 0.5, y: 0.5}}
           />

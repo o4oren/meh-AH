@@ -12,7 +12,7 @@ export default function walkView({navigation}) {
 
   async function playSound() {
     try {
-      await soundObject.loadAsync(require('../../assets/audio/alarm_1.wav'));
+      await soundObject.loadAsync(require('../../../assets/audio/alarm_1.wav'));
       soundObject.setIsLoopingAsync(true);
       soundObject.playAsync();
     } catch (error) {

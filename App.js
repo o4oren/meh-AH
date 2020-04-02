@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import MainApp from './components/mainApp/mainApp';
+import MainApp from './app/components/mainApp/mainApp';
 import Provider from 'react-redux/lib/components/Provider';
 import {createStore} from "redux";
-import combineReducers from "./redux/reducers/rootReducer";
+import combineReducers from "./app/redux/reducers/rootReducer";
 import { AppLoading } from 'expo';
-import {retrieveSavedState} from "./services/storageService";
+import {retrieveSavedState} from "./app/services/storageService";
 
 const store = createStore(combineReducers);
 
