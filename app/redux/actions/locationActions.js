@@ -1,12 +1,12 @@
-export const UPDATE_CURRENT_LOCATION = "UPDATE_CURRENT_LOCATION";
+export const UPDATE_CURRENT_POSITION = "UPDATE_CURRENT_LOCATION";
 export const UPDATE_DISTANCE = "UPDATE_DISTANCE";
 export const EXCEED_ALLOWED_RANGE = "EXCEED_ALLOWED_RANGE";
 export const RETURN_TO_ALLOWED_RANGE = "RETURN_TO_ALLOWED_RANGE";
 
-const updateCurrentLocation = (location) => {
+const updateCurrentPosition = (position) => {
   return {
-    type: UPDATE_CURRENT_LOCATION,
-    payload: {currentLocation: location}
+    type: UPDATE_CURRENT_POSITION,
+    payload: {currentPosition: position}
   };
 };
 
@@ -30,7 +30,7 @@ const updateDistance = (distance) => {
 };
 
 export default {
-  updateCurrentLocation,
+  updateCurrentPosition: updateCurrentPosition,
   exceedAllowedRange,
   returnToAllowedRange,
   updateDistance

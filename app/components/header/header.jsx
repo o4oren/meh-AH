@@ -1,14 +1,16 @@
 import React from 'react';
-import {Header, Icon} from 'react-native-elements'
+import {Header, Icon} from 'react-native-elements';
+import * as RootNavigation from '../../services/rootNavigation';
 
-export default  function header(props) {
+export default  function header() {
+  // const navigation =  useNavigation();
   function renderLeftItem() {
     return (
       <Icon
         name='menu'
         type='material'
         color='#fff'
-        onPress={() => props.navigation.openDrawer()}
+        onPress={() => RootNavigation.toggleDrawer()}
       />
     );
   }
@@ -16,7 +18,7 @@ export default  function header(props) {
     <Header
       leftComponent={renderLeftItem()}
       centerComponent={{ text: 'meh-AH!', style: { color: '#fff', fontSize: 20 } }}
-      backgroundColor={'#5388d0'}
+      backgroundColor={'#44327d'}
     />
   );
 }

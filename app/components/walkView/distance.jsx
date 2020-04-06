@@ -5,22 +5,22 @@ import {Text} from "react-native-elements";
 import allActions from "../../redux/actions";
 
 export default function distance(props) {
-  const currentLocation = useSelector(state => state.location.currentLocation);
-  const homeLocation = useSelector(state => state.settings.homeLocation);
+  const currentPosition = useSelector(state => state.location.currentPosition);
+  const homePosition = useSelector(state => state.settings.homePosition);
   const distance = useSelector(state => state.location.distance);
   const allowedRange = useSelector(state => state.settings.allowedRange);
   const dispatch = useDispatch();
 
   const calcDistance = () => {
-    if (homeLocation && currentLocation) {
+    if (homePosition && currentPosition) {
       const dist = haversine({
-        latitude: homeLocation.latitude,
-        longitude: homeLocation.longitude
+        latitude: homePosition.latitude,
+        longitude: homePosition.longitude
       }, {
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude
+        latitude: currentPosition.latitude,
+        longitude: currentPosition.longitude
       }, { unit: 'meter' });
-      if (Math.abs(distance - dist) > 2) {
+      if (Math.abs(distance - dist) >= 1) {
         dispatch(allActions.locationActions.updateDistance((Math.round(dist))));
       }
     }
@@ -35,11 +35,8 @@ export default function distance(props) {
   }
 
   useEffect(() => {
-    let job = setInterval(() => {
-      calcDistance();
-      checkExceeding();
-    }, 200);
-    return (()=> clearTimeout(job));
+    calcDistance();
+    checkExceeding();
   });
 
   if(props.alerted) {

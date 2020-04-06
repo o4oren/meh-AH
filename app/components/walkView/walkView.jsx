@@ -4,15 +4,14 @@ import Distance from './distance';
 import {useSelector} from "react-redux";
 import MapView from '../mapView/mapView';
 import { Audio } from 'expo-av';
-import Header from "../header/header";
 
-export default function walkView({navigation}) {
+export default function walkView() {
   const isInRange = useSelector(state => state.location.isInRange);
   const soundObject = new Audio.Sound();
 
   async function playSound() {
     try {
-      await soundObject.loadAsync(require('../../assets/audio/alarm_1.wav'));
+      await soundObject.loadAsync(require('../../../assets/audio/alarm_1.wav'));
       soundObject.setIsLoopingAsync(true);
       soundObject.playAsync();
     } catch (error) {
@@ -39,14 +38,13 @@ export default function walkView({navigation}) {
       );
       playSound();
     }
-    return (<Distance stylee={styles.distance} alerted={!isInRange}/>);
+    return (<Distance alerted={!isInRange}/>);
   }
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation}/>
       {checkRange()}
-      <MapView style={styles.mapView}/>
+      <MapView style={styles.mapView} heightCompensation='140'/>
     </View>
   );
 }
@@ -57,7 +55,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   mapView: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    height: 400
   },
   distance: {
     flex: 1
