@@ -12,12 +12,7 @@ export default function mapView(props) {
   const LONGITUDE_DELTA = 0.003;
   const currentPosition = useSelector(state => state.location.currentPosition);
   const [heading, setHeading] = useState(0);
-  const [userMarkerCoordinate, setUserMarkerCoordinate] = useState(new AnimatedRegion({
-    latitude: 34,
-    longitude: 30,
-    latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA
-  }));
+  const [userMarkerCoordinate, setUserMarkerCoordinate] = useState(new AnimatedRegion());
   const homePosition = useSelector(state => state.settings.homePosition);
   const radius = useSelector(state => state.settings.allowedRange);
   const dispatch = useDispatch();

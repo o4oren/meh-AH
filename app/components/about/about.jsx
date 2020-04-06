@@ -7,7 +7,7 @@ export default function about() {
     <View style={styles.container}>
       <View style={styles.mainBody}>
         <Text style={styles.heading}>אודות meh-AH!</Text>
-        <Text style={styles.textHebrew}>עקב התפרצות וירוס הקורונה,
+        <Text style={styles.textHebrew}>
           הנחיות משרד הבריאות מגבילות יציאה מהבית שלא לצורך הצטיידות במזון או תרופות למרחק 100 מטרים מהבית.
           אפליקציה זו נועדה לעזור לכם לשמור על המרחק הזה. 100 מטרים הם הרבה פחות ממה שאתם חושבים...
         </Text>
@@ -15,9 +15,9 @@ export default function about() {
         <Text style={styles.heading}>About meh-AH!</Text>
         <Text style={styles.text}>
           meh-AH is the IPA phonetic transcription of the Hebrew word for the number 100.{'\n'}
-          With the COVID-19 pandemic outbreak, Israel's Ministry of Health issued emergency instructions,
+          Israel's Ministry of Health issued emergency instructions,
           among which is the prohibition of leaving home for a distance of more than 100 meters,
-          if not for the resupplying of food and medication.
+          except for the resupplying of food and medication.
           This app can help people measure the distance from home {'\n'}
           100 Meters are a lot less than you might think...
         </Text>
