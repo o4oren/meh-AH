@@ -25,7 +25,12 @@
     ],
     "ios": {
       "buildNumber": "1.1.0",
-      "supportsTablet": false
+      "supportsTablet": false,
+        "infoPlist": {
+          "NSLocationWhenInUseUsageDescription": "This app uses location to calculate the user's distance from home.",
+          "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location to calculate the user's distance from home.",
+          "NSLocationAlwaysUsageDescription": "This app uses location to calculate the user's distance from home."
+        }
     },
     "android": {
       "versionCode": 1,
