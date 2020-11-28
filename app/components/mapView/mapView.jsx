@@ -1,4 +1,4 @@
-import MapView, {Circle, Marker, AnimatedRegion} from "react-native-maps";
+import MapView, {Circle, Marker, AnimatedRegion, PROVIDER_GOOGLE} from "react-native-maps";
 import React, {useEffect, useRef, useState} from "react";
 import { Dimensions } from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
@@ -128,6 +128,7 @@ export default function mapView(props) {
       return (
         <MapView
           ref={mapRef}
+          provider={PROVIDER_GOOGLE}
           style={styles.mapStyle}
           loadingEnabled={true}
           showsPointsOfInterest={true}
